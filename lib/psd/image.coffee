@@ -15,7 +15,7 @@ module.exports = class Image extends Module
   @includes ImageMode.RGB
   @includes ImageMode.CMYK
   @includes Export.PNG
-  
+
   # Images can be 1 of 4 different compression types. RLE is the most prevalent, followed by
   # RAW. ZIP compression only happens under special circumstances, and is somewhat rare.
   COMPRESSIONS = [
@@ -33,7 +33,7 @@ module.exports = class Image extends Module
     @calculateLength()
 
     # The resulting array that stores the pixel data, formatted in RGBA format.
-    @pixelData = new Uint8Array(@length)
+    @pixelData = new Uint8Array(@channelLength * 4)
     @maskData =  new Uint8Array(@maskLength * 4)
 
     # This temporarily holds the raw channel data after it's been parsed, but not
@@ -86,7 +86,7 @@ module.exports = class Image extends Module
 
   # Parses the compression mode.
   parseCompression: -> @file.readShort()
-    
+
   # Parses the image data based on the compression mode.
   parseImageData: ->
     switch @compression
